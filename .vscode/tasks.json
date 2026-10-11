@@ -1,0 +1,66 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build QR Eigenvalue Approximation",
+            "type": "shell",
+            "command": "C:\\MinGW\\bin\\g++.exe",
+            "args": [
+                "-std=c++17",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-I", "${workspaceFolder}/include",
+                "${workspaceFolder}/src/eigentest.cpp",
+                "${workspaceFolder}/src/QR_based_Approximation.cpp",
+                "${workspaceFolder}/src/factorizations.cpp",
+                "${workspaceFolder}/src/NLA_FUNCTIONS.cpp",
+                "${workspaceFolder}/src/MATRIX.cpp",
+                "-o", "${workspaceFolder}/eigenvalue.exe"
+            ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "problemMatcher": ["$gcc"],
+            "group": "build"
+        },
+        {
+            "label": "Run QR on Sampling 25x25",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/eigenvalue.exe\" \"${workspaceFolder}/data/eigentest_sampling_25.txt\"",
+            "options": { "cwd": "${workspaceFolder}" },
+            "dependsOn": ["Build QR Eigenvalue Approximation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run QR on Hanowa 24x24",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/eigenvalue.exe\" \"${workspaceFolder}/data/eigentest_hanowa_24.txt\"",
+            "options": { "cwd": "${workspaceFolder}" },
+            "dependsOn": ["Build QR Eigenvalue Approximation"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Eigenvalue Verification",
+            "type": "shell",
+            "command": "C:\\MinGW\\bin\\g++.exe",
+            "args": [
+                "-std=c++17",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-I", "${workspaceFolder}/include",
+                "${workspaceFolder}/src/eigenvalue_varification.cpp",
+                "${workspaceFolder}/src/MATRIX.cpp",
+                "-o", "${workspaceFolder}/verify_eigenvalues.exe"
+            ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "problemMatcher": ["$gcc"],
+            "group": "build"
+        },
+        {
+            "label": "Run Eigenvalue Verification",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/verify_eigenvalues.exe\"",
+            "options": { "cwd": "${workspaceFolder}" },
+            "dependsOn": ["Build Eigenvalue Verification"],
+            "problemMatcher": []
+        }
+    ]
+}
